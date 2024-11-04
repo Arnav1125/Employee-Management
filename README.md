@@ -37,4 +37,18 @@ This Employee Management System is a web application developed using Spring Boot
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
-   cd Employee-Management
+   
+### Access the Application:
+
+- **Open your web browser and go to: http://localhost:8080/index.html**
+  
+### API Endpoints
+## Employee Management Endpoints
+## Method	Endpoint	Description
+- **GET	/api/employees	Retrieve a list of all employees**
+- **POST	/api/employees	Create a new employee**
+- **PUT	/api/employees/{id}	Update an existing employee by ID**
+- **DELETE	/api/employees/{id}	Delete an employee by ID**
+### User Authentication Endpoints
+## Method	Endpoint	Description
+- **POST	/api/employees/login	Authenticate a user and log in**
