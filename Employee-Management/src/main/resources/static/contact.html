@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Background and Centering */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f3f3f3;
+        }
+
+        /* Contact Form Container */
+        .contact-container {
+            width: 500px; /* Wider container */
+            padding: 40px; /* Increased padding */
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-container h2 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 30px; /* Larger spacing */
+            font-size: 28px; /* Larger font size */
+        }
+
+        /* Form Labels and Inputs */
+        label {
+            font-size: 16px; /* Larger font size */
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 12px; /* Increased padding */
+            margin: 8px 0 20px; /* Increased spacing */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px; /* Larger font size */
+            resize: vertical; /* Allow resizing of textarea */
+        }
+
+        /* Submit Button */
+        .contact-button {
+            width: 100%;
+            padding: 15px; /* Larger button padding */
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px; /* Larger font size */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Message Display */
+        #contactMessage {
+            margin-top: 20px;
+            text-align: center;
+            color: green; /* Success message color */
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit" class="contact-button">Send Message</button>
+        </form>
+        <div id="contactMessage"></div> <!-- Success message display -->
+    </div>
+
+    <script>
+        // Handle Contact Us submission
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value; // Get phone number
+            const message = document.getElementById('message').value;
+
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, phone, message }), // Include phone in request body
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to send your query');
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('contactMessage').textContent = 'Your query has been sent!';
+                document.getElementById('contactForm').reset(); // Reset the form
+            })
+            .catch(error => {
+                document.getElementById('contactMessage').textContent = error.message;
+            });
+        });
+    </script>
+</body>
+</html>
